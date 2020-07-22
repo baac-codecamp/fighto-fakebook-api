@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const config = require('../config/index')
 const User = require("../models/userModel")
-
+const moment = require('moment')
 const users = [
     {
         id: "1",
@@ -65,7 +65,7 @@ exports.getProfile = (req, res, next) => {
 module.exports.signup = async (req, res, next) => {
     try {
         //const { name, email, password } = req.body;
-        const { email, password, firstname, lastname, userid, gender,address, education, displayname } = req.body;
+        const { email, password, firstname, lastname, gender,address, education, displayname } = req.body;
 
         //validation
         //check validation result ก่อน โดย req จะแปะ error validation มาด้วย
@@ -91,12 +91,13 @@ module.exports.signup = async (req, res, next) => {
         user.password = await user.encryptPassword(password);
         user.firstname = firstname;
         user.lastname = lastname;
-        user.userid = userid;
+      
         user.gender = gender;
         user.address = address;
         user.education = education;
-        user.education = displayname;
-
+        user.displayname = displayname;
+        user.datecreate = moment().format();
+        
         await user.save();
 
         res.status(201).json({
