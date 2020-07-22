@@ -16,7 +16,8 @@ router.post('/signup', [
     body('lastname').not().isEmpty().withMessage('Field lastname is required'),
     body('address').not().isEmpty().withMessage('Field address is required'),
     body('education').not().isEmpty().withMessage('Field education is required'),
-    body('datacreate').not().isEmpty().withMessage('Field datacreate is required'),
+    
+    
    
 ], userController.signup);
 router.post('/signin',
