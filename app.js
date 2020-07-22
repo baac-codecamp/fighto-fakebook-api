@@ -3,6 +3,8 @@ const path = require('path');
 
 //const helmet = require('helmet');
 //const rateLimit = require("express-rate-limit");
+
+//allow origin
 //const cors = require('cors');
 
 const passport = require('passport');
@@ -15,6 +17,7 @@ const config = require('./config/index');
 const connectDB = require('./config/db')
 
 const userRoute = require('./routes/userRoute');
+const guideRoute = require('./routes/guideRoute');
 const postRoute = require('./routes/postRoute');
 
 const app = express();
@@ -56,6 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/api/user', userRoute);
+app.use('/api/guide', guideRoute);
 app.use('/api/post', postRoute);
 
 app.use(errorHandler);
