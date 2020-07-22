@@ -1,9 +1,9 @@
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const config = require('../config/index')
-const User = require("../models/userModel")
+const Guide = require("../models/guideModel")
 
-const users = [
+const guides = [
     {
         id: "1",
         name: "peter"
@@ -14,8 +14,8 @@ const users = [
     }
 ];
 
-async function findUserById(id) {
-    return users.find(item => {
+async function findGuideById(id) {
+    return guides.find(item => {
         if (item.id == id) {
             return item;
         } else {
@@ -26,10 +26,10 @@ async function findUserById(id) {
 
 module.exports.index = async (req, res, next) => {
     try {
-        const users = await User.find();
+        const guides = await Guide.find();
         res.status(200).json({
             success: true,
-            data: users
+            data: guides
         });
 
     } catch (err) {
@@ -38,18 +38,18 @@ module.exports.index = async (req, res, next) => {
 
 }
 
-module.exports.getUserById = function (req, res, next) {
+module.exports.getGuideById = function (req, res, next) {
     console.log(`Id : ${req.params.id}`);
-    let user = users.find(item => item.id == req.params.id);
-    res.status(200).json(user);
+    let guide = guides.find(item => item.id == req.params.id);
+    res.status(200).json(guide);
 }
 
 exports.getProfile = (req, res, next) => {
-    const { _id, name, email, role } = req.user;
+    const { _id, name, email, role } = req.guide;
     try {
         res.status(200).json({
             success: true,
-            user: {
+            guide: {
                 id: _id,
                 name: name,
                 email: email,
@@ -76,7 +76,7 @@ module.exports.signup = async (req, res, next) => {
             throw error;
         }
 
-        const existEmail = await User.findOne({ email: email });
+        const existEmail = await Guide.findOne({ email: email });
 
         if (existEmail) {
             const error = new Error('Email already exits');
@@ -84,15 +84,15 @@ module.exports.signup = async (req, res, next) => {
             throw error;
         }
 
-        let user = new User();
-        user.name = name;
-        user.email = email;
-        user.password = await user.encryptPassword(password);
+        let guide = new Guide();
+        guide.name = name;
+        guide.email = email;
+        guide.password = await guide.encryptPassword(password);
 
-        await user.save();
+        await guide.save();
 
         res.status(201).json({
-            data: user,
+            data: guide,
             success: true
         });
     } catch (err) {
@@ -115,14 +115,14 @@ password: ${password}`)
             error.validation = errors.array();
             throw error;
         }
-        const user = await User.findOne({ email: email });
-        if (!user) {
-            const error = new Error('Authentication Failed, User not found');
+        const guide = await Guide.findOne({ email: email });
+        if (!guide) {
+            const error = new Error('Authentication Failed, Guide not found');
             error.statusCode = 404;
             throw error;
         }
 
-        const isMatch = await user.comparePassword(password);
+        const isMatch = await guide.comparePassword(password);
         if (!isMatch) {
             const error = new Error('Incorrect password');
             error.statusCode = 401;
@@ -130,10 +130,10 @@ password: ${password}`)
         }
 
         //create token
-        console.log(user._id);
+        console.log(guide._id);
         const token = await jwt.sign({
-            id: user._id,
-            role: user.role
+            id: guide._id,
+            role: guide.role
         }, config.JWT_SECRET, { expiresIn: '10 days' });
 
         //decode expiration date
@@ -150,35 +150,35 @@ password: ${password}`)
     }
 }
 
-module.exports.updateUser = async (req, res) => {
+module.exports.updateGuide = async (req, res) => {
     // const token = req.header("authorization");
     const { id } = req.params;
     // const id =  req.params.id;
     console.log(`Id : ${id}`);
-    const user = await findUserById(id);
-    if (user) {
-        console.log(`User has been updated. id : ${user.id}`);
+    const guide = await findGuideById(id);
+    if (guide) {
+        console.log(`Guide has been updated. id : ${guide.id}`);
     } else {
-        console.log(`User is not exits.`);
-        res.status(404).send({ message: "Not found User with id " + id });
+        console.log(`Guide is not exits.`);
+        res.status(404).send({ message: "Not found Guide with id " + id });
     }
 
-    // console.log(user);
-    //users.push(user);
-    res.status(201).json(user);
+    // console.log(guide);
+    //guides.push(guide);
+    res.status(201).json(guide);
 }
 
-module.exports.deleteUser = async function (req, res) {
+module.exports.deleteGuide = async function (req, res) {
     // const token = req.header("authorization");
     const { id } = req.params;
     // const id =  req.params.id;
     console.log(`Id : ${id}`);
-    const user = await findUserById(id);
-    if (user) {
-        console.log(`User has been delete. id : ${user.id}`);
+    const guide = await findGuideById(id);
+    if (guide) {
+        console.log(`Guide has been delete. id : ${guide.id}`);
     } else {
-        console.log(`User is not exits.`);
-        res.status(404).send({ message: "Not found User with id " + id });
+        console.log(`Guide is not exits.`);
+        res.status(404).send({ message: "Not found Guide with id " + id });
     }
     res.status(200).json({ message: "success" });;
 }
