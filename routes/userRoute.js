@@ -6,11 +6,18 @@ const authorization = require('../middleware/authorizationHandler');
 
 const router = express.Router()
 
-router.post('/', [
+router.post('/signup', [
     //validation : express validator
-    body('name').not().isEmpty().withMessage('Field name is required'),
+    body('displayname').not().isEmpty().withMessage('Field displayname is required'),
     body('email').not().isEmpty().withMessage('Field email is required').isEmail().withMessage('Wrong email format'),
-    body('password').not().isEmpty().withMessage('Field password is required').isLength({ min: 6 }).withMessage('Password must be  at least 6 digits')
+    body('password').not().isEmpty().withMessage('Field password is required').isLength({ min: 6 }).withMessage('Password must be  at least 6 digits'),
+    body('gender').not().isEmpty().withMessage('Field gender is required'),
+    body('firstname').not().isEmpty().withMessage('Field firstname is required'),
+    body('lastname').not().isEmpty().withMessage('Field lastname is required'),
+    body('address').not().isEmpty().withMessage('Field address is required'),
+    body('education').not().isEmpty().withMessage('Field education is required'),
+    body('datacreate').not().isEmpty().withMessage('Field datacreate is required'),
+   
 ], userController.signup);
 router.post('/signin',
     body('email').not().isEmpty().withMessage('Field email is required').isEmail().withMessage('Wrong email format'),

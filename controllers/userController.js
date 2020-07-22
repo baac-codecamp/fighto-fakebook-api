@@ -94,6 +94,7 @@ module.exports.signup = async (req, res, next) => {
         user.userid = userid;
         user.gender = gender;
         user.address = address;
+        user.education = education;
         user.education = displayname;
 
         await user.save();
