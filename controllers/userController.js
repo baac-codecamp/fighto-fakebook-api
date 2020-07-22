@@ -64,7 +64,8 @@ exports.getProfile = (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body;
+        //const { name, email, password } = req.body;
+        const { email, password, firstname, lastname, userid, gender,address, education, displayname } = req.body;
 
         //validation
         //check validation result ก่อน โดย req จะแปะ error validation มาด้วย
@@ -85,9 +86,15 @@ module.exports.signup = async (req, res, next) => {
         }
 
         let user = new User();
-        user.name = name;
+        //user.name = name;
         user.email = email;
         user.password = await user.encryptPassword(password);
+        user.firstname = firstname;
+        user.lastname = lastname;
+        user.userid = userid;
+        user.gender = gender;
+        user.address = address;
+        user.education = displayname;
 
         await user.save();
 
