@@ -15,8 +15,8 @@ const users = [
 ];
 
 async function findUserById(id) {
-    return users.find(item => {
-        if (item.id == id) {
+    return User.find(item => {
+        if (item._id == id) {
             return item;
         } else {
             return null;
@@ -160,21 +160,47 @@ password: ${password}`)
 }
 
 module.exports.updateUser = async (req, res) => {
-    // const token = req.header("authorization");
+    const { email, password, firstname, lastname, gender, address, education, displayname } = req.body;
     const { id } = req.params;
-    // const id =  req.params.id;
     console.log(`Id : ${id}`);
-    const user = await findUserById(id);
+    const user = await User.findOne({ _id: id });
     if (user) {
-        console.log(`User has been updated. id : ${user.id}`);
+        console.log(`User has been updated. id : ${user._id}`);
     } else {
         console.log(`User is not exits.`);
         res.status(404).send({ message: "Not found User with id " + id });
     }
+    if (email) {
+        user.email = email;
+    }
+    if (password) {
+        user.password = await user.encryptPassword(password);
+    }
+    if (firstname) {
+        user.firstname = firstname;
+    }
+   if (lastname) {
+        user.lastname = lastname;
+   }
+    if (gender) {
+        user.gender = gender;
+    }
+    if (address) {
+        user.address = address;
+    }
+    if (education) {
+        user.education = education;
+    }
+    if (displayname) {
+        user.displayname = displayname;
+    }
+    
+    await user.save();
 
-    // console.log(user);
-    //users.push(user);
-    res.status(201).json(user);
+    res.status(201).json({
+        data: user,
+        success: true
+    });
 }
 
 module.exports.deleteUser = async function (req, res) {
