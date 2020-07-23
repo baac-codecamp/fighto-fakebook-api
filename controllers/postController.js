@@ -199,7 +199,7 @@ module.exports.list = async (req, res, next) => {
             throw error;
         }
         
-        const user = await Post.findOne({ email: email });
+        const user = await Post.findall({ email: email });
         const users = [];
         users.push(user)
 
