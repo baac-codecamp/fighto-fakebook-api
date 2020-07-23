@@ -6,7 +6,11 @@ module.exports.index = async function (req, res , next) {
     
     try {
              // select * from post; 
-        const posts = await Post.find();
+        const { email } = req.params;
+        console.log(`id : ${email}`)
+        
+        const posts = await Post.findById(email).select('email','postImage','postText','timestamp')
+        console.log(posts)
         res.status(200).json({
             data: posts,
             success: true
