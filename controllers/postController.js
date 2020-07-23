@@ -200,6 +200,9 @@ module.exports.list = async (req, res, next) => {
         }
         
         const user = await Post.findOne({ email: email });
+        const users = [];
+        users.push[user]
+
         if (!user) {
             const error = new Error('Authentication Failed, User not found');
             error.statusCode = 404;
@@ -208,7 +211,7 @@ module.exports.list = async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            user: user ,
+            users: users,
         });
 
     } catch (error) {
