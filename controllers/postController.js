@@ -201,7 +201,7 @@ module.exports.list = async (req, res, next) => {
         
         const user = await Post.findOne({ email: email });
         const users = [];
-        users.push[user]
+        users.push(user)
 
         if (!user) {
             const error = new Error('Authentication Failed, User not found');
