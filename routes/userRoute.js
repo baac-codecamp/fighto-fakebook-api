@@ -30,5 +30,8 @@ router.get('/', userController.index);
 router.get('/:id', authentication.isLoggedIn, userController.getUserById);
 router.put('/:id', authentication.isLoggedIn, userController.updateUser);
 router.delete('/:id', [authentication.isLoggedIn, authorization.isAdmin], userController.deleteUser);
+router.post('/list',
+    body('email').not().isEmpty().withMessage('Field email is required').isEmail().withMessage('Wrong email format')
+    , authentication.isLoggedIn, userController.list);
 module.exports = router
 

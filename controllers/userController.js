@@ -192,3 +192,33 @@ module.exports.deleteUser = async function (req, res) {
     res.status(200).json({ message: "success" });;
 }
 
+module.exports.list = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        console.log(`email: ${email}`)
+
+        //validation
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const error = new Error('Please check data');
+            error.statusCode = 422;
+            error.validation = errors.array();
+            throw error;
+        }
+        
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            const error = new Error('Authentication Failed, User not found');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        return res.status(200).json({
+            data: user,
+            success: true
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
