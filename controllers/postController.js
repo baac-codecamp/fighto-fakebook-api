@@ -208,13 +208,7 @@ module.exports.list = async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            user: {
-                
-                email: email,
-                postImage: postImage,
-                postText: postText,
-                timestamps: timestamps,
-            }
+            user: user ,
         });
 
     } catch (error) {
