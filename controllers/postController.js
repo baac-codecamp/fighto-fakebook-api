@@ -199,7 +199,7 @@ module.exports.list = async (req, res, next) => {
             throw error;
         }
         
-        const user = await User.findOne({ email: email });
+        const user = await Post.findOne({ email: email });
         if (!user) {
             const error = new Error('Authentication Failed, User not found');
             error.statusCode = 404;
