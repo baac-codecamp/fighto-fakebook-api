@@ -18,6 +18,6 @@ router.patch('/:id', postController.updatePostSome)
 // DELETED localhost:3000/api/post/xxxxxxxxxxxx
 router.delete('/:id', postController.deletePost)
 
-router.post('/list', authentication.isLoggedIn,postController.index)
+router.post('/list', authentication.isLoggedIn,postController.list)
 
 module.exports = router
