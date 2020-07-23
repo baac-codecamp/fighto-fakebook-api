@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const postController   = require('../controllers/postController')
+const authentication = require('../middleware/authenticationHandler');
 
 //GET localhost:3000/api/post
-router.get('/', postController.index)
+//router.get('/', postController.index)
 //GET localhost:3000/api/post/xxxxxxxxxxx
 router.get('/:id', postController.getPostById)
 router.get('/tag/:id', postController.getTags)
@@ -16,5 +17,7 @@ router.put('/:id', postController.updatePost)
 router.patch('/:id', postController.updatePostSome)
 // DELETED localhost:3000/api/post/xxxxxxxxxxxx
 router.delete('/:id', postController.deletePost)
+
+router.post('/list', authentication.isLoggedIn,postController.index)
 
 module.exports = router

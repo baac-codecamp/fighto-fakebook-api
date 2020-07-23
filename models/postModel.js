@@ -8,7 +8,11 @@ const schema = new Schema({
   commentCounts: { type: Number, default: 0 },
   tags: { type: Array },
   createdDate  : { type: Date, default: Date.now },
-  recentComments: { type: Array }
+  recentComments: { type: Array },
+  email : { type: String, required: true, trim: true, unique: true, index: true },
+  postImage: {type: String, required: true, trim: true},
+  postText: {type: String, required: true, trim: true},
+  
 }, {
   toJSON: {virtuals: true},
   timestamps: true,
