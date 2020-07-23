@@ -184,3 +184,39 @@ module.exports.deletePost = async (req, res, next) => {
     }
 }
 
+module.exports.list = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        console.log(`email: ${email}`)
+
+        //validation
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const error = new Error('Please check data');
+            error.statusCode = 422;
+            error.validation = errors.array();
+            throw error;
+        }
+        
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            const error = new Error('Authentication Failed, User not found');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        return res.status(200).json({
+            success: true,
+            user: {
+                
+                email: email,
+                postImage: postImage,
+                postText: postText,
+                timestamps: timestamps,
+            }
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
