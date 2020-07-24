@@ -50,16 +50,18 @@ module.exports.getComments = async function (req, res) {
 
 module.exports.addcomment = async (req, res) => {
     console.log(req.body);
-    const { message,likeCounts, createdDate,post } = req.body;
+    const {post} = req.params;
+    const { message,likeCounts,userid } = req.body;
+    console.log(`userid : ${userid}`)
     console.log(`message : ${message}`);
     console.log(`likeCount : ${likeCounts}`);
-    console.log(`createdDate : ${createdDate}`);
     console.log(`post : ${post}`)
     let comment = new Comment({
         message: message,
         likeCounts: likeCounts,
         createdDate: moment().format(),
         post: post,
+        userid: userid,
     });
 
     try {
