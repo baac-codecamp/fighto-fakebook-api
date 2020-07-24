@@ -102,6 +102,7 @@ module.exports.getPostById = async (req, res, next) => {
     res.status(200).json({ data: { post } });
 }
 
+//module createPost
 module.exports.createPost = async (req, res) => {
     console.log(req.body);
     const { email, postImage, postText } = req.body;
