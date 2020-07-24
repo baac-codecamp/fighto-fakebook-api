@@ -79,11 +79,15 @@ module.exports.getPostById = async (req, res, next) => {
 
 module.exports.createPost = async (req, res) => {
     console.log(req.body);
-    const { title, tags } = req.body;
-    console.log(`Title : ${title}`);
+    const { email, postImage, postText } = req.body;
+    console.log(`email : ${email}`);
+    console.log(`postImage : ${postImage}`);
+    console.log(`postText : ${postText}`);
     let post = new Post({
-        title: title,
-        tags: tags
+        email: email,
+        postImage: postImage,
+        postText: postText,
+        createdDate: moment().format()
     });
 
     try {
