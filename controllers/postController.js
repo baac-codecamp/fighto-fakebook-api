@@ -89,7 +89,7 @@ module.exports.createPost = async (req, res) => {
         postImage: postImage,
         postText: postText,
         createdDate: moment().format(),
-        history: moment().format()
+        history= moment().format()
     });
 
     try {
@@ -148,10 +148,14 @@ module.exports.updatePostSome = async (req, res, next) => {
         const { history}  = moment().format();
       
         
-        console.log(`id : ${id}`);
+        console.log(`Id : ${id}`);
+        console.log(`postImage : ${postImage}`);
+        console.log(`postText : ${postText}`);
+        console.log(`history : ${history}`);
         const post = await Post.findByIdAndUpdate(id, {
             postImage: postImage,
             postText: postText ,
+            history: history ,
             
         });
 
