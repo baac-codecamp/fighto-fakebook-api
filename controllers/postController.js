@@ -113,7 +113,7 @@ module.exports.createPost = async (req, res) => {
         postImage: postImage,
         postText: postText,
         createdDate: moment().format(),
-        history= moment().format()
+        history:moment().format()
     });
 
     try {
