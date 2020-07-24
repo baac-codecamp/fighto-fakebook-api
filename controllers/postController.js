@@ -107,13 +107,13 @@ module.exports.updatePost = async (req, res, next) => {
         const { postImage } = req.body;
         const { postText} = req.body;
         const { history}  = moment().format();
-        console.log(req.body);
+        //console.log(req.body);
         console.log(`Id : ${id}`);
         console.log(`postImage : ${postImage}`);
         console.log(`postText : ${postText}`);
         console.log(`history : ${history}`);
         const post = await Post.updateOne({ _id: id },
-            { postImage: postImage }, { postText: postText }, {history: history}
+            { postImage: postImage,postText: postText, history: history } 
         );
 
         // console.log(post);
@@ -151,7 +151,7 @@ module.exports.updatePostSome = async (req, res, next) => {
         const post = await Post.findByIdAndUpdate(id, {
             postImage: postImage,
             postText: postText ,
-            history : history ,
+            
         });
 
         console.log(`post : ${post}`);
@@ -225,7 +225,7 @@ module.exports.list = async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            users: users,
+            users: {users},
         });
 
     } catch (error) {

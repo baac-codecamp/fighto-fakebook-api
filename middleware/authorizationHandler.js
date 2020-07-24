@@ -10,3 +10,16 @@ module.exports.isAdmin = (req, res, next) => {
         });
     }
 }
+
+module.exports.isUser = (req, res, next) => {
+    const { role } = req.user;
+    if ( role === 'user') {
+        next();
+    } else {
+        return res.status(403).json({
+            error: {
+                message: 'Not authorized'
+            }
+        });
+    }
+}
