@@ -114,7 +114,11 @@ module.exports.createPost = async (req, res) => {
         postImage: postImage,
         postText: postText,
         createdDate: moment().format(),
+<<<<<<< HEAD
+        history:moment().format()
+=======
         history: moment().format()
+>>>>>>> c334260c429797adf3bbe3e63ef7031938992d1c
     });
 
     try {
