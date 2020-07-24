@@ -88,7 +88,8 @@ module.exports.createPost = async (req, res) => {
         email: email,
         postImage: postImage,
         postText: postText,
-        createdDate: moment().format()
+        createdDate: moment().format(),
+        history: moment().format()
     });
 
     try {
