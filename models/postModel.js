@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 //const User = require('./userModel');
 
 const schema = new Schema({
-  title: { type: String, required: true, trim: true },
+  title: { type: String, trim: true },
   description: { type: String, trim: true },
   commentCounts: { type: Number, default: 0 },
   tags: { type: Array },
