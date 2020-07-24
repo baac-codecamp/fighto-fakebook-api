@@ -104,12 +104,16 @@ module.exports.createPost = async (req, res) => {
 module.exports.updatePost = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { title } = req.body;
+        const { postImage } = req.body;
+        const { postText} = req.body;
+        const { history}  = moment().format();
         console.log(req.body);
         console.log(`Id : ${id}`);
-        console.log(`title : ${title}`);
+        console.log(`postImage : ${postImage}`);
+        console.log(`postText : ${postText}`);
+        console.log(`history : ${history}`);
         const post = await Post.updateOne({ _id: id },
-            { title: title }
+            { postImage: postImage }, { postText: postText }, {history: history}
         );
 
         // console.log(post);
@@ -138,11 +142,16 @@ module.exports.updatePostSome = async (req, res, next) => {
     try {
         console.log(req.body);
         const { id } = req.params;
-        const { title } = req.body;
-
-        console.log(`Id : ${id}`);
+        const { postImage } = req.body;
+        const { postText} = req.body;
+        const { history}  = moment().format();
+      
+        
+        console.log(`id : ${id}`);
         const post = await Post.findByIdAndUpdate(id, {
-            title: title
+            postImage: postImage,
+            postText: postText ,
+            history : history ,
         });
 
         console.log(`post : ${post}`);

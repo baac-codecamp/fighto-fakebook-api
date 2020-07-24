@@ -12,6 +12,7 @@ const schema = new Schema({
   email : { type: String, required: true, trim: true, unique: true, index: true },
   postImage: {type: String, required: true, trim: true},
   postText: {type: String, required: true, trim: true},
+  history: {type: String, required: true, trim: true},
   
 }, {
   toJSON: {virtuals: true},
