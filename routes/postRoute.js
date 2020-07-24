@@ -11,6 +11,7 @@ router.get('/tag/:id', postController.getTags)
 router.get('/comment/:id', postController.getComments)
 
 router.post('/comment/:post', authentication.isLoggedIn,postController.addcomment)
+router.put('/comment/:userid', authentication.isLoggedIn,postController.updateComment)
 //POST localhost:3000/api/post  {BODY}
 router.post('/', postController.createPost)
 //PUT localhost:3000/api/post/xxxxxxxxxxxx {BODY}

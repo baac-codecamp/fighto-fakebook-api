@@ -74,6 +74,42 @@ module.exports.addcomment = async (req, res) => {
     }
 }
 
+module.exports.updateComment = async (req, res, next) => {
+    try {
+        const { userid } = req.params;
+        const { message } = req.body;
+        const { likeCounts} = req.body;
+        const { history}  = moment().format();
+        //console.log(req.body);
+        console.log(`userid : ${userid}`);
+        console.log(`message : ${message}`);
+        console.log(`likeCounts : ${likeCounts}`);
+        console.log(`history : ${history}`);
+        const post = await Post.updateOne({ _userid:    userid },
+            { message: message,likeCounts: likeCounts, history: history } 
+        );
+
+        // console.log(post);
+
+        if (post.nModified === 0) {
+            throw new Error('Cannot update');
+        } else {
+            res.status(201).json(
+                {
+                    message: "Update completed",
+                    success: true
+                });
+        }
+    } catch (err) {
+        res.status(500).json({
+            error: [{
+                code: 500,
+                message: err.message
+            }]
+        });
+    }
+}
+
 module.exports.getTags = async function (req, res, next) {
 
     try {
