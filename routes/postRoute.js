@@ -9,6 +9,8 @@ const authentication = require('../middleware/authenticationHandler');
 router.get('/:id', postController.getPostById)
 router.get('/tag/:id', postController.getTags)
 router.get('/comment/:id', postController.getComments)
+
+router.post('/comment/:id', postController.addcomment)
 //POST localhost:3000/api/post  {BODY}
 router.post('/', postController.createPost)
 //PUT localhost:3000/api/post/xxxxxxxxxxxx {BODY}

@@ -48,6 +48,30 @@ module.exports.getComments = async function (req, res) {
     }
 }
 
+module.exports.addcomment = async (req, res) => {
+    console.log(req.body);
+    const { message,likeCounts, createdDate,post } = req.body;
+    console.log(`message : ${message}`);
+    console.log(`likeCount : ${likeCounts}`);
+    console.log(`createdDate : ${createdDate}`);
+    console.log(`post : ${post}`)
+    let comment = new Comment({
+        message: message,
+        likeCounts: likeCounts,
+        createdDate: moment().format(),
+        post: post,
+    });
+
+    try {
+        await comment.save();
+        res.status(201).json({ data: comment, success: true });
+    } catch (err) {
+        res.status(500).json({
+            errors: { err }
+        });
+    }
+}
+
 module.exports.getTags = async function (req, res, next) {
 
     try {
@@ -218,7 +242,8 @@ module.exports.list = async (req, res, next) => {
             throw error;
         }
         
-        const user = await Post.find({ email: email });
+        const user = await Post.find({ email: email })
+        .populate('comments', 'message user');
         const users = [];
         users.push(user)
 
