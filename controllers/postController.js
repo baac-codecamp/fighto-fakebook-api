@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Post = require('../models/postModel');
 const Comment = require('../models/commentModel');
 const { validationResult } = require('express-validator');
+const moment = require('moment'); 
 
 module.exports.index = async function (req, res , next) {
     
