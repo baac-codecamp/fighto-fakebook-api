@@ -5,7 +5,7 @@ const Post = require('./postModel');
 const schema = new Schema({
     message : { type: String, required: true},
     likeCounts : { type: Number , default: 0 },
-    user : { type: String, required: true},
+    userid : { type: String, required: true},
     createdDate : { type: Date, default: Date.now },
     post : { type : Schema.Types.ObjectId, ref : 'Post'}
 },{
