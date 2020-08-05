@@ -131,7 +131,7 @@ exports.signin = async (req, res, next) => {
             throw error;
         }
 
-        const isMatch = await user.comparePassword(txtUsername);
+        const isMatch = await user.comparePassword(txtPassword);
         if (!isMatch) {
             const error = new Error('Incorrect password');
             error.statusCode = 401;
