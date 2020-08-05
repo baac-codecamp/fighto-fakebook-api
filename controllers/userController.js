@@ -113,8 +113,8 @@ exports.signin = async (req, res, next) => {
     try {
         const { txtUsername, txtPassword } = req.body;
         console.log
-            (`email: ${txtUsername} 
-password: ${txtPassword}`)
+            (`txtUsername: ${txtUsername} 
+            txtUsername: ${txtPassword}`)
 
         //validation
         const errors = validationResult(req);
