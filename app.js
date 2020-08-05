@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 //const helmet = require('helmet');
 //const rateLimit = require("express-rate-limit");
@@ -50,6 +51,12 @@ mongoose.connect('mongodb+srv://dbuser02:dbuser02@cluster0-z4eg1.gcp.mongodb.net
     useFindAndModify: false
 }); */
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 //'./public'
@@ -58,7 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //init passport
 app.use(passport.initialize());
 
-app.use('/api/user', userRoute);
+app.use('/api/user', cors(), userRoute);
 app.use('/api/guide', guideRoute);
 app.use('/api/post', postRoute);
 
