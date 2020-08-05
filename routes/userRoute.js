@@ -21,8 +21,8 @@ router.post('/signup', [
    
 ], userController.signup);
 router.post('/signin',
-    body('email').not().isEmpty().withMessage('Field email is required').isEmail().withMessage('Wrong email format'),
-    body('password').not().isEmpty().withMessage('Field password is required')
+    body('txtUsername').not().isEmpty().withMessage('Field email is required').isEmail().withMessage('Wrong email format'),
+    body('txtPassword').not().isEmpty().withMessage('Field password is required')
     , userController.signin);
 router.get('/me', authentication.isLoggedIn, userController.getProfile);
 
