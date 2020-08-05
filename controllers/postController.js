@@ -50,16 +50,18 @@ module.exports.getComments = async function (req, res) {
 
 module.exports.addcomment = async (req, res) => {
     console.log(req.body);
-    const { message,likeCounts, createdDate,post } = req.body;
+    const {post} = req.params;
+    const { message,likeCounts,userid } = req.body;
+    console.log(`userid : ${userid}`)
     console.log(`message : ${message}`);
     console.log(`likeCount : ${likeCounts}`);
-    console.log(`createdDate : ${createdDate}`);
     console.log(`post : ${post}`)
     let comment = new Comment({
         message: message,
         likeCounts: likeCounts,
         createdDate: moment().format(),
         post: post,
+        userid: userid,
     });
 
     try {
@@ -68,6 +70,42 @@ module.exports.addcomment = async (req, res) => {
     } catch (err) {
         res.status(500).json({
             errors: { err }
+        });
+    }
+}
+
+module.exports.updateComment = async (req, res, next) => {
+    try {
+        const { userid } = req.params;
+        const { message } = req.body;
+        const { likeCounts} = req.body;
+        const { history}  = moment().format();
+        //console.log(req.body);
+        console.log(`userid : ${userid}`);
+        console.log(`message : ${message}`);
+        console.log(`likeCounts : ${likeCounts}`);
+        console.log(`history : ${history}`);
+        const post = await Post.updateOne({ _userid:    userid },
+            { message: message,likeCounts: likeCounts, history: history } 
+        );
+
+        // console.log(post);
+
+        if (post.nModified === 0) {
+            throw new Error('Cannot update');
+        } else {
+            res.status(201).json(
+                {
+                    message: "Update completed",
+                    success: true
+                });
+        }
+    } catch (err) {
+        res.status(500).json({
+            error: [{
+                code: 500,
+                message: err.message
+            }]
         });
     }
 }
