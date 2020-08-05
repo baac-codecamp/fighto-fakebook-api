@@ -111,10 +111,10 @@ module.exports.signup = async (req, res, next) => {
 
 exports.signin = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        const { txtUsername, txtPassword } = req.body;
         console.log
-            (`email: ${email} 
-password: ${password}`)
+            (`email: ${txtUsername} 
+password: ${txtPassword}`)
 
         //validation
         const errors = validationResult(req);
@@ -124,14 +124,14 @@ password: ${password}`)
             error.validation = errors.array();
             throw error;
         }
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: txtUsername });
         if (!user) {
             const error = new Error('Authentication Failed, User not found');
             error.statusCode = 404;
             throw error;
         }
 
-        const isMatch = await user.comparePassword(password);
+        const isMatch = await user.comparePassword(txtUsername);
         if (!isMatch) {
             const error = new Error('Incorrect password');
             error.statusCode = 401;
